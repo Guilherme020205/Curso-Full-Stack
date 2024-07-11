@@ -1,57 +1,58 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 function App() {
 
-  const [titulo, setTitulo] = useState('')
-  const [duracao, setDuracao] = useState('')
-  const [capa, setCapa] = useState('')
+  const [input, setInput] = useState('')
 
-  const [filme, setFilme] = useState({})
+  const [tarefas, setTarefas] = useState([
+    'Pagar luz',
+    'Estudar react'
+  ]);
 
-  function cadFilme(e) {
-    e.preventDefault()
-    alert("Cadastrado")
+  useEffect(() => {
+    const tarefasStorage = localStorage.getItem("@tarefa");
 
-    setFilme({
-      titulo: titulo,
-      duracao: duracao,
-      capa: capa
-    })
+    if(tarefasStorage){
+      setTarefas(JSON.parse(tarefasStorage))
+    }
 
+  }, []);
+
+
+
+  useEffect(() => {
+    localStorage.setItem('@tarefa', JSON.stringify(tarefas))
+  }, [tarefas]);
+
+  function cadastrando(e) {
+    e.preventDefault();
+
+    setTarefas([...tarefas, input]);
+
+    setInput('');
   }
 
   return (
     <div>
       <h1>Cadastro</h1>
-      <form onSubmit={cadFilme}>
-        <label>Titulo do filme</label><br />
-        <input
-          placeholder='ex: avatar'
-          value={titulo}
-          onChange={(e) => setTitulo(e.target.value)}
-        /><br /><br />
+      <form onSubmit={cadastrando}>
 
-        <label>Duração do filme</label><br />
+        <label>Nome da tarefa</label><br />
         <input
-          placeholder='ex: 155 minutos'
-          value={duracao}
-          onChange={(e) => setDuracao(e.target.value)}
-        /><br /><br />
-
-        <label>Capa do filme</label><br />
-        <input
-          placeholder='link da capa'
-          value={capa}
-          onChange={(e) => setCapa(e.target.value)}
+          placeholder='tarefa...'
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
         /><br /><br />
 
         <button type='submit'>Registrar</button>
       </form>
-      <div>
-        <h1>Titulo {filme.titulo}</h1>
-        <p>Duração {filme.duracao} minutos</p>
-        <img src={filme.capa} />
-      </div>
+      <ul>
+        {tarefas.map(tarefa => (
+          <li key={tarefa}>{tarefa}</li>
+        ))
+
+        }
+      </ul>
 
     </div>
   );
