@@ -3,6 +3,9 @@ import './filme-info.css'
 import { useParams, useNavigate } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 
+import { toast } from 'react-toastify';
+
+
 import api from '../../services/api'
 
 function Filme() {
@@ -38,7 +41,7 @@ function Filme() {
             console.log("COMPONENTE DESMONTADO")
         }
 
-    }, [navigate]);
+    }, [navigate, id]);
 
     function salvarFilme(){
           const minhaLista = localStorage.getItem('@reactFlix')
@@ -48,13 +51,13 @@ function Filme() {
           const hasFilme = filmesSalvos.some( (filmesSalvos) => filmesSalvos.id === filme.id)
 
         if(hasFilme){
-            alert("Esse filme já está na sua lista!")
+            toast.warn("Esse filme já está na sua lista!")
             return;
         }
 
         filmesSalvos.push(filme);
         localStorage.setItem("@reactFlix", JSON.stringify(filmesSalvos));
-        alert('Filme Salvo')
+        toast.success('Filme Salvo')
 
     }
 
