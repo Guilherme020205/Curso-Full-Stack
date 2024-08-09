@@ -12,6 +12,10 @@ import { ListCategoryControllers } from "./controllers/category/ListCategoryCont
 import { CreateProductController } from "./controllers/product/CreateProductControllers";
 import { ListBayCategoryController } from "./controllers/product/ListBayCategoryController";
 
+import { CreateOrderController } from "./controllers/order/CreateOrderController";
+import { RemoveOrderController } from "./controllers/order/RemoveOrderController";
+import { AdditemController } from "./controllers/order/AdditemController";
+
 import upLoadConfig from "./config/multer"
 
 const router = Router();
@@ -37,5 +41,10 @@ router.get('/categorys', isAuthenticated, new ListCategoryControllers().handle)
 router.post('/product', isAuthenticated, upload.single('file') , new CreateProductController().handle)
 router.get('/category/product', isAuthenticated, new ListBayCategoryController().handle)
 
+//-- ROTAR ORDER 
+
+router.post('/order', isAuthenticated, new CreateOrderController().handle )
+router.delete('/order', isAuthenticated, new RemoveOrderController().handle)
+router.post('/order/add', isAuthenticated, new AdditemController().handle)
 
 export {router};
