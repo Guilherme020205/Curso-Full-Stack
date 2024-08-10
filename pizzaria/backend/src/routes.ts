@@ -15,6 +15,7 @@ import { ListBayCategoryController } from "./controllers/product/ListBayCategory
 import { CreateOrderController } from "./controllers/order/CreateOrderController";
 import { RemoveOrderController } from "./controllers/order/RemoveOrderController";
 import { AdditemController } from "./controllers/order/AdditemController";
+import { RemoveitemController } from "./controllers/order/RemoveitemController";
 
 import upLoadConfig from "./config/multer"
 
@@ -46,5 +47,6 @@ router.get('/category/product', isAuthenticated, new ListBayCategoryController()
 router.post('/order', isAuthenticated, new CreateOrderController().handle )
 router.delete('/order', isAuthenticated, new RemoveOrderController().handle)
 router.post('/order/add', isAuthenticated, new AdditemController().handle)
+router.delete('/order/remove', isAuthenticated, new RemoveitemController().handle)
 
 export {router};
