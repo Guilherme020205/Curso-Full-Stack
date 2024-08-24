@@ -1,5 +1,7 @@
+import { resolve } from "path";
+
 interface DataProps {
-  id: number;
+  id: number; 
   name: string;
   full_name: string;
   owner: {
@@ -11,10 +13,23 @@ interface DataProps {
   html_url: string;
 }
 
+// async function getData() {
+//   // https://api.github.com/users/guilherme020205/repos
+//   const response = await fetch("https://api.github.com/users/guilherme020205/repos");
+//   return response.json();
+// }
+
+async function delayFetch(url: string, delay: number) {
+  await new Promise(resolve => setTimeout(resolve, delay))
+  const response = await fetch(url);
+  return response.json();  
+}
+
 async function getData() {
   // https://api.github.com/users/guilherme020205/repos
-  const response = await fetch("https://api.github.com/users/guilherme020205/repos");
-  return response.json();
+  const data = await delayFetch("https://api.github.com/users/guilherme020205/repos", 1000);
+  
+  return data;
 }
 
 export default async function Home() {
