@@ -1,4 +1,5 @@
 import { resolve } from "path";
+import { Ownerrepo } from '@/components/Ownerrepo';
 
 interface DataProps {
   id: number; 
@@ -21,13 +22,14 @@ interface DataProps {
 
 async function delayFetch(url: string, delay: number) {
   await new Promise(resolve => setTimeout(resolve, delay))
-  const response = await fetch(url);
+  const response = await fetch(url, {next: {revalidate: 120} });
+  // const response = await fetch(url, {cache: 'no-cache'});
   return response.json();  
 }
 
 async function getData() {
   // https://api.github.com/users/guilherme020205/repos
-  const data = await delayFetch("https://api.github.com/users/guilherme020205/repos", 1000);
+  const data = await delayFetch("https://api.github.com/users/guilherme020205/repos", 500);
   
   return data;
 }
@@ -46,7 +48,12 @@ export default async function Home() {
       {data.map((item) => (
         <div key={item.id}>
           <strong>Repositório:  </strong> <a href={item.html_url}>{item.name}</a>
-          <br /> <br />
+          <br />
+          <Ownerrepo
+            avatar_url={item.owner.avatar_url}
+            name={item.owner.login}
+          />
+          <br /> 
           
         </div>
       ))}
