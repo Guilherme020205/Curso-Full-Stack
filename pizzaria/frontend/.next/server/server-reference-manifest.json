@@ -1,16 +1,8 @@
 {
   "node": {
-    "48102340d704346cda18ae56e17aa077a6235628": {
+    "9e34d7dd680a37a61412eeb49ec28c5158d6aa28": {
       "workers": {
-        "app/page": "(rsc)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CUsers%5C%5CGuilherme%5C%5CDocuments%5C%5CGitHub%5C%5CCurso-Full-Stack%5C%5Cpizzaria%5C%5Cfrontend%5C%5Csrc%5C%5Capp%5C%5Cpage.tsx%22%2C%5B%22%24%24ACTION_0%22%5D%5D%5D&__client_imported__=!"
-      },
-      "layer": {
-        "app/page": "rsc"
-      }
-    },
-    "528e1c35b7d76a26b579c75ba02795b9937ea747": {
-      "workers": {
-        "app/dashboard/category/page": "(rsc)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CUsers%5C%5CGuilherme%5C%5CDocuments%5C%5CGitHub%5C%5CCurso-Full-Stack%5C%5Cpizzaria%5C%5Cfrontend%5C%5Csrc%5C%5Capp%5C%5Cdashboard%5C%5Ccategory%5C%5Cpage.tsx%22%2C%5B%22%24%24ACTION_0%22%5D%5D%5D&__client_imported__=!"
+        "app/dashboard/category/page": "(rsc)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CUsers%5C%5CQualidade01%5C%5CDocuments%5C%5CGitHub%5C%5CCurso-Full-Stack%5C%5Cpizzaria%5C%5Cfrontend%5C%5Csrc%5C%5Capp%5C%5Cdashboard%5C%5Ccategory%5C%5Cpage.tsx%22%2C%5B%22%24%24ACTION_0%22%5D%5D%5D&__client_imported__=!"
       },
       "layer": {
         "app/dashboard/category/page": "rsc"
@@ -18,5 +10,5 @@
     }
   },
   "edge": {},
-  "encryptionKey": "UpPzf3HPfxLydYNq6qWHQPigN5tyb12y4J/BLTdqkpU="
+  "encryptionKey": "/g2BHGgH+gHiRczpk6osSG4qXquAi3qSUoW2vCCP2W8="
 }

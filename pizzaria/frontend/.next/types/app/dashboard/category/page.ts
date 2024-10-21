@@ -1,4 +1,4 @@
-// File: C:\Users\Guilherme\Documents\GitHub\Curso-Full-Stack\pizzaria\frontend\src\app\dashboard\category\page.tsx
+// File: C:\Users\Qualidade01\Documents\GitHub\Curso-Full-Stack\pizzaria\frontend\src\app\dashboard\category\page.tsx
 import * as entry from '../../../../../src/app/dashboard/category/page.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 
