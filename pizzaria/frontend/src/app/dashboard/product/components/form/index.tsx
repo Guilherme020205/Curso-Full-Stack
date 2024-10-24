@@ -5,6 +5,10 @@ import styles from "./styles.module.scss"
 import { UploadCloud } from "lucide-react"
 import Image from "next/image"
 import { Button } from "@/app/dashboard/components/button"
+import { api } from "@/services/api"
+import { getCookieClient } from "@/lib/cookieClient"
+import { toast } from "sonner"
+import { useRouter } from "next/navigation"
 
 interface CategoryProps{
     id: string;
@@ -17,21 +21,46 @@ interface Props{
 
 export function Form({categories}: Props) {
 
+    const router = useRouter();
     const [image, setImage] = useState<File>()
     const [previewImage, setPreviewImage] = useState("")
 
 
     async function handleRegisterProduct(formData: FormData){
+
         const categoryIndex = formData.get("category")
         const name = formData.get("name")
         const price = formData.get("price")
         const description = formData.get("description")
 
-        if(!name || !categoryIndex || !price || !description){
+        if(!name || !categoryIndex || !price || !description || !image){
+            toast.success("Preencha todos os campos!")
             return;
         }
 
-        console.log(categories[Number(categoryIndex)])
+        const data = new FormData();
+
+        data.append("name", name)
+        data.append("price", price)
+        data.append("description", description)
+        data.append("category_id", categories[Number(categoryIndex)].id)
+        data.append("file", image)
+
+        const token = getCookieClient()
+
+        await api.post("/product", data, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        })
+        .catch((err) => {
+            toast.success("Produto não foi cadastrado!")
+            console.log(err)
+            return;
+        })
+
+        toast.success("Produto cadastrado com sucesso!")
+        router.push("/dashboard")
     }
 
 
@@ -39,8 +68,8 @@ export function Form({categories}: Props) {
     function handleFile(e: ChangeEvent<HTMLInputElement>) {
         if (e.target.files && e.target.files[0]) {
             const image = e.target.files[0];
-            if (image.type !== "image/jpeg" && image.type !== "image/png") {
-                console.log("Formato proibido!!")
+            if (image.type !== "image/jpeg" && image.type !== "image/png" && image.type !== "image/jpg") {
+                toast.success("Formato não permitido!")
                 return;
             }
             setImage(image)
@@ -48,7 +77,6 @@ export function Form({categories}: Props) {
 
         }
     }
-
 
     return (
         <div>
@@ -111,7 +139,6 @@ export function Form({categories}: Props) {
 
                     <Button name="Cadastrar produto"/>
                     
-
                 </form>
 
             </main>
