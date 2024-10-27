@@ -1,32 +1,39 @@
 import styles from "./styles.module.scss"
-import {RefreshCcw} from 'lucide-react'
+import { RefreshCcw } from 'lucide-react'
+import { OrderProps } from '@/lib/order.type';
+import { Modalorder } from './../modal/index';
 
-export function Orders(){
-    return(
-        <main className={styles.container}>
-            <section className={styles.containerHeader}>
+interface Props {
+    orders: OrderProps[]
+}
 
-                <h1>Últimos pedidos</h1>
-                <button>
-                    <RefreshCcw size={24} color="#3fffa3"></RefreshCcw>
-                </button>
+export function Orders({ orders }: Props) {
+    return (
+        <>
+            <main className={styles.container}>
+                <section className={styles.containerHeader}>
 
-            </section>
+                    <h1>Últimos pedidos</h1>
+                    <button>
+                        <RefreshCcw size={24} color="#3fffa3"></RefreshCcw>
+                    </button>
 
-            <section className={styles.listOrders}>
+                </section>
 
-                <button className={styles.orderItem}>
-                    <div className={styles.tag}></div>
-                    <span>Mesa 10</span>
-                </button>
-                
-                <button className={styles.orderItem}>
-                    <div className={styles.tag}></div>
-                    <span>Mesa 13</span>
-                </button>
+                <section className={styles.listOrders}>
 
-            </section>
+                    {orders.map(order => (
+                        <button className={styles.orderItem} key={order.id}>
+                            <div className={styles.tag}></div>
+                            <span>Mesa {order.table}</span>
+                        </button>
+                    ))}
 
-        </main>
+                </section>
+            </main>
+
+            <Modalorder />
+                    
+        </>
     )
 }
