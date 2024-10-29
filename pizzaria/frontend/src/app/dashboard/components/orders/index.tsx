@@ -15,6 +15,10 @@ interface Props {
 export function Orders({ orders }: Props) {
 
     const { isOpen, onrequestOpen } = use(OrderContext);
+    
+    function handleDetailOrder(order_id: string){
+        onrequestOpen(order_id)
+    }
 
     return (
         <>
@@ -31,7 +35,11 @@ export function Orders({ orders }: Props) {
                 <section className={styles.listOrders}>
 
                     {orders.map(order => (
-                        <button className={styles.orderItem} key={order.id}>
+                        <button 
+                            className={styles.orderItem} 
+                            key={order.id}
+                            onClick={() => handleDetailOrder(order.id)}
+                        >
                             <div className={styles.tag}></div>
                             <span>Mesa {order.table}</span>
                         </button>
