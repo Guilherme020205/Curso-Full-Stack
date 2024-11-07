@@ -2,10 +2,12 @@
 
 import { getCookieClient } from "@/lib/cookieClient";
 import { api } from "@/services/api";
+import { useRouter } from "next/navigation";
 import { createContext, ReactNode, use, useState } from "react"
+import { toast } from "sonner";
 
 
-interface OrderItemProps{
+export interface OrderItemProps{
     id: string;
     amount: number;
     creted_at: string;
@@ -22,7 +24,7 @@ interface OrderItemProps{
     order:{
         id: string;
         table: string;
-        name: string;
+        name: null | string;
         draf: string;
         status: string;
     }
@@ -31,8 +33,10 @@ interface OrderItemProps{
 
 type OrderContextData = {
     isOpen: boolean;
-    onrequestOpen: (order_ide: string) => void;
+    onrequestOpen: (order_ide: string) => Promise<void>;
     onrequestClose: () => void;
+    order: OrderItemProps[];
+    finishOrder: (order_id: string) => Promise<void>;
 }
 
 type OrderProviderProps = {
@@ -45,6 +49,7 @@ export function OrderProvider({ children } : OrderProviderProps){
     
     const [ isOpen, setIsOpen] = useState(false);
     const [order, setOrdr] = useState<OrderItemProps[]>([])
+    const router = useRouter()
 
     async function onrequestOpen(order_id: string){
         console.log(order_id)
@@ -61,12 +66,40 @@ export function OrderProvider({ children } : OrderProviderProps){
             }
         })
         
-        console.log(response.data)
-
+        setOrdr(response.data);
         setIsOpen(true);
+
     }
     function onrequestClose(){
         setIsOpen(false);
+    }
+
+    async function finishOrder(order_id: string) {
+
+        const token = getCookieClient();
+        
+        const data = {
+            order_id: order_id,
+        }
+
+        try{
+
+            await api.put("/order/finish", data, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            })
+
+        }catch(err){
+            console.log(err)
+            toast.error("Pedido com erro!")
+            return;
+        }
+
+        toast.success("Pedido finalizado com sucesso!")
+        router.refresh()
+        setIsOpen(false)
+        
     }
 
     return(
@@ -74,7 +107,9 @@ export function OrderProvider({ children } : OrderProviderProps){
             value={{
                 isOpen,
                 onrequestOpen,
-                onrequestClose
+                onrequestClose,
+                finishOrder,
+                order
             }}
         >
             {children}
