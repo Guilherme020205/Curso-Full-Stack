@@ -7,16 +7,8 @@
       "layer": {
         "app/page": "rsc"
       }
-    },
-    "cad84fd8edabd285ea91932a549f536e55e874ab": {
-      "workers": {
-        "app/signup/page": "(rsc)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CUsers%5C%5CQualidade01%5C%5CDocuments%5C%5CGitHub%5C%5CCurso-Full-Stack%5C%5Cpizzaria%5C%5Cfrontend%5C%5Csrc%5C%5Capp%5C%5Csignup%5C%5Cpage.tsx%22%2C%5B%22%24%24ACTION_0%22%5D%5D%5D&__client_imported__=!"
-      },
-      "layer": {
-        "app/signup/page": "rsc"
-      }
     }
   },
   "edge": {},
-  "encryptionKey": "hruVB7hyT+/I7KOC1HnD7t59KcZ/o/KxQ5+FkLolVm8="
+  "encryptionKey": "Tl5jttNlhcrrpiaYhEggAYezunaHqtnlCmhruOzSe+4="
 }
