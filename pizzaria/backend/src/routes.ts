@@ -44,7 +44,8 @@ router.get('/categorys', isAuthenticated, new ListCategoryControllers().handle)
 
 //-- ROTAS PRODUCT
 
-router.post('/product', isAuthenticated, upload.single('file') , new CreateProductController().handle)
+// router.post('/product', isAuthenticated, upload.single('file') , new CreateProductController().handle)
+router.post('/product', isAuthenticated, new CreateProductController().handle)
 router.get('/category/product', isAuthenticated, new ListBayCategoryController().handle)
 
 //-- ROTAR ORDER 
