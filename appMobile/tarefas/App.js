@@ -1,30 +1,70 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native"
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  TextInput,
+  FlatList
+} from "react-native"
 
+import { FontAwesome } from '@expo/vector-icons'
+
+import Tarefa from "./src/Tarefa";
+ 
 export default function app() {
 
-  const [nome, setNome] = useState('Fulano')
+  const [tarefa, setTarefa] = useState('')
 
-  function handleMudaNome() {
-    setNome("Sujeito Programador")
+  const [list, setList] = useState([])
+
+  function handleAdd () {
+    
+    if(tarefa === ''){
+      return;
+    }
+
+    const dados = {
+      key: Date.now(),
+      item: tarefa
+    }
+
+    setList(oldArray => [dados, ...oldArray])
+
+    setTarefa('')
+  }
+
+  function handleDelete(item) {
+    let filtroItem = list.filter((tarefa) => {
+      return (tarefa.item !== item)
+    })
+
+    setList(filtroItem)
   }
 
   return (
     <View style={styles.container}>
-      <Text style={{ fontSize: 28 }}>Sujeito Programador</Text>
+      <Text style={styles.title}>Tarefas</Text>
 
-      <Text style={styles.title}>Style diferente um</Text>
-      <Text style={[styles.title, styles.text]}>Style diferente dois</Text>
+      <View style={styles.containerInput}>
+        <TextInput
+          placeholder="Digite sua tarefa..."
+          style={styles.input}
+          value={tarefa}
+          onChangeText={ (text) => setTarefa(text)}
+        />
 
-      <Text style={styles.nome}>{nome}</Text>
+        <TouchableOpacity style={styles.buttonAdd} onPress={handleAdd}>
+          <FontAwesome name="plus" size={20} color='#fff' />
+        </TouchableOpacity>
 
-      <TouchableOpacity
-        style={styles.button}
-        onPress={handleMudaNome}
-      >
-        <Text style={styles.buttonText}>Mudar Nome</Text>
-      </TouchableOpacity>
-
+      </View>
+      <FlatList
+        data={list}
+        keyExtractor={ (item) => item.key}
+        renderItem={ ({item}) => <Tarefa data={item} deleteItem={() => handleDelete(item.item)} />}
+        style={styles.list}
+      />
     </View>
   )
 }
@@ -32,35 +72,45 @@ export default function app() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#4F4F4F',
+    backgroundColor: '#22272e',
     paddingTop: 28
   },
-  button: {
-    backgroundColor: "blue",
-    height: 40,
-    justifyContent: "center",
-    alignItems: 'center',
-    marginTop: 35
-  },
-
-  buttonText: {
-    color: "#fff",
-    fontWeight: 'bold'
-  },
-
   title: {
-    fontSize: 35,
-    color: '#121212',
-    fontWeight: "bold"
+    fontWeight: 'bold',
+    fontSize: 24,
+    color: '#fff',
+    marginTop: '5%',
+    paddingStart: '5%',
+    marginBottom: 12
   },
-  text: {
-    color: "red"
+  containerInput: {
+    flexDirection: 'row',
+    width: "100%",
+    height: 44,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 22
   },
-
-  nome: {
-    fontSize: 40,
-    color: '#121212',
-    fontWeight: "bold",
-    textAlign: 'center'
+  input: {
+    width: '75%',
+    backgroundColor: '#FBFBFB',
+    height: 44,
+    borderRadius: 4,
+    paddingHorizontal: 8,
+  },
+  buttonAdd: {
+    width: '15%',
+    height: 44,
+    backgroundColor: '#73f7ff',
+    marginLeft: 8,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 4
+  },
+  list: {
+    flex: 1,
+    backgroundColor: '#FFF',
+    paddingStart: '4%',
+    paddingEnd: '4%'
   }
 })
