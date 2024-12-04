@@ -1,9 +1,27 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import { View, Text, StyleSheet, Image, TextInput, TouchableOpacity } from "react-native";
 
+import { AuthContext } from "../../contexts/AuthContext";
+
 export default function SignIn() {
+
+    const { user } = useContext(AuthContext)
+
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+
+    function handleLogin() {
+
+        if(email === '' || password === ''){
+            return;
+        }
+
+        alert(email + password)
+    }
+
     return (
         <View style={styles.container}>
+
             <Image
                 style={styles.logo}
                 source={require('../../assets/logo.png')}
@@ -13,14 +31,18 @@ export default function SignIn() {
                     placeholder="Seu email"
                     style={styles.input}
                     placeholderTextColor='#f0f0f0'
-                />
+                    value={email}
+                    onChangeText={setEmail}
+                    />
                 <TextInput
                     placeholder="Sua senha"
                     style={styles.input}
                     placeholderTextColor='#f0f0f0'
-                />
+                    value={password}
+                    onChangeText={setPassword}
+                    />
 
-                <TouchableOpacity style={styles.button}>
+                <TouchableOpacity style={styles.button} onPress={handleLogin}>
                     <Text style={styles.buttonText}>Acessar</Text>
                 </TouchableOpacity>
 
@@ -61,12 +83,13 @@ const styles = StyleSheet.create({
         backgroundColor: '#3fffa3',
         borderRadius: 4,
         justifyContent: 'center',
-        alignContent: 'center'
+        alignContent: 'center',
     },
     buttonText: {
         fontSize: 18,
         fontWeight: 'bold',
-        color: '#101026'
+        color: '#101026',
+        textAlign: 'center'
     }
 
 })
