@@ -5,6 +5,7 @@ import { Text, SafeAreaView, TouchableOpacity, TextInput, StyleSheet } from "rea
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { StackPramsList } from "../../routes/app.routes";
 
+import { api } from "../../services/api";
 
 export default function Dashboard(){
     const navigation = useNavigation<NativeStackNavigationProp<StackPramsList>>()
@@ -17,11 +18,18 @@ export default function Dashboard(){
             return;
         }
 
+        const response = await api.post("/order", {
+            table: Number(number)
+        })
+
+        // console.log(response.data)
         // precisa fazer a requisicao e abrir a mesa e navegar para proxima tela.
-        navigation.navigate('Order', {number: number, order_id: 'jd0fi-9dfpew9-dfw3i'})   
-         
+        navigation.navigate('Order', {number: number, order_id: response.data.id})   
+
+        setNumber('')
+
     }
-    
+
     return(
         <SafeAreaView style={styles.container}>
             <Text style={styles.title}>Novo Pedido</Text>
