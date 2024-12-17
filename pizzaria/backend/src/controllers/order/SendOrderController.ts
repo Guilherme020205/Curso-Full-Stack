@@ -7,7 +7,7 @@ class SendOrderController{
 
     const sendOrder = new SendOrderService();
 
-    const order = await sendOrder.execut({
+    const order = await sendOrder.execute({
       order_id
     });
 
