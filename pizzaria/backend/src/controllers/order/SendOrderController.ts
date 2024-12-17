@@ -1,30 +1,19 @@
-import { Request, Response } from 'express';
-import { SendOrderService } from '../../services/order/SendOrderService';
+import { Response, Request } from "express";
+import { SendOrderService } from "../../services/order/SendOrderService";
+
 
 class SendOrderController {
-  async handle(req: Request, res: Response) {
-    // Extrair order_id do corpo da requisição
-    const { order_id } = req.body;
+    async handle(req: Request, res: Response){
+        const order_id = req.query.order_id as string
 
-    // Verificar se order_id foi fornecido
-    if (!order_id) {
-      return res.status(400).json({ error: "Order ID is required" }); // Retornar erro se não for passado
+        const sendOrderService = new SendOrderService();
+
+        const order = await sendOrderService.execut({
+            order_id
+        })
+
+        return res.json(order)
     }
-
-    const sendOrder = new SendOrderService();
-
-    try {
-      // Executar o serviço com o order_id fornecido
-      const order = await sendOrder.execute({ order_id });
-
-      // Retornar o pedido atualizado
-      return res.json(order);
-    } catch (error) {
-      // Tratar erros do Prisma ou outros erros inesperados
-      console.error(error);
-      return res.status(500).json({ error: "An error occurred while sending the order" });
-    }
-  }
 }
 
-export { SendOrderController };
+export { SendOrderController }
