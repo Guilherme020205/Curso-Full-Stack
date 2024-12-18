@@ -26,7 +26,7 @@ export default function FinishOrder(){
 
   async function handleFinish(){
     try{
-      await api.put('/order/send', {
+      await api.put('/order/finish', {
         order_id: route.params?.order_id
       })
 
@@ -35,6 +35,7 @@ export default function FinishOrder(){
 
     }catch(err){
       console.log("ERRO AO FINALIZAR, tente mais tarde")
+      console.log(err)
     }
   }
 

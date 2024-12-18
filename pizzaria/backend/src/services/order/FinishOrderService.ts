@@ -12,7 +12,7 @@ class FinishOrderService {
                 id: order_id
             },
             data: {
-                draft: false
+                status: true
             }
         })
 
