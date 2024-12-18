@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-    baseURL: 'https://curso-full-stack-eight.vercel.app/'
+    baseURL: 'https://backpizzaria.vercel.app/'
 })
 
 export {api}
